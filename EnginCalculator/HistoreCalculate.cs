@@ -37,7 +37,7 @@ namespace EnginCalculator
             }
             else
             {
-                Console.WriteLine("Список пускт");
+                Console.WriteLine("Список пускт ");
             }
             
         }
