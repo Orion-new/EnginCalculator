@@ -12,9 +12,11 @@ namespace EnginCalculator
 
         public double Power380(double x);
 
-        public double MainCurrent220(double x ,double y);
+        public double MainCurrent220(double  power);
 
-        public double MainCurrent380(double x,double y);
+        public double MainCurrent380(double power);
+
+        double? ListAutomats(double current);
 
         
     }
