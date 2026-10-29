@@ -3,6 +3,7 @@ using EnginCalculator;
 
 IPowerCalculator service2 = new newPowerCalculator();
 HistoreCalculate histore = new();
+histore.Load();
 while (true)
 {
     string menuChoice;
@@ -37,21 +38,22 @@ while (true)
                 if (resultchoice == 1)
                 {
                     double current = ReadDouble("Введите ток");
-                   
-                    histore.AddPower(service2.Power220(current));
-                    Console.WriteLine($"Мощность вашей сети {service2.Power220(current)} кВт" );
-                    
+                    double power = service2.Power220(current);
+                    histore.AddPower(power);
+                    histore.Save();
+                    Console.WriteLine($"Мощность вашей сети {power} кВт");
+
 
                 }
                 else if (resultchoice == 2)
                 {
                     double current = ReadDouble("Введите ток");
-                    
-
+                    double power = service2.Power380(current);
 
                     histore.AddPower(service2.Power380(current));
-                    Console.WriteLine($"Мощность вашей сети {service2.Power380(current)} кВт");
-                    
+                    histore.Save();
+                    Console.WriteLine($"Мощность вашей сети {power} кВт");
+
 
 
                 }
@@ -69,13 +71,13 @@ while (true)
             }
             else if (newResult == 1)
             {
-                
+
                 double currentPower = ReadDouble("Введите мощность");
-                               
-                double resultOperation = service2.MainCurrent220( currentPower);
+
+                double resultOperation = service2.MainCurrent220(currentPower);
 
                 double? automat = service2.ListAutomats(resultOperation);
-                if(automat == null)
+                if (automat == null)
                 {
                     Console.WriteLine($"Ток в вашей сети {resultOperation} ,нет подходящего автомата из списка");
                 }
@@ -83,18 +85,19 @@ while (true)
                 {
                     Console.WriteLine($"Ток в вашей сети {resultOperation} ,а автомат вам нужен {automat} A");
                 }
-                
+
                 histore.AddCurrent(resultOperation);
-                
-                
-                
+                histore.Save();
+
+
+
 
             }
             else if (newResult == 2)
             {
-                
+
                 double currentPower = ReadDouble("Введите мощность");
-                double resultOperation = service2.MainCurrent380( currentPower);
+                double resultOperation = service2.MainCurrent380(currentPower);
 
                 double? automat = service2.ListAutomats(resultOperation);
                 if (automat == null)
@@ -106,8 +109,9 @@ while (true)
                     Console.WriteLine($"Ток в вашей сети {resultOperation} ,а автомат вам нужен {automat} A");
                 }
                 histore.AddCurrent(resultOperation);
-                
-                
+                histore.Save();
+
+
             }
         }
         else if (result == 3)
@@ -123,9 +127,9 @@ while (true)
             Console.WriteLine("Вы ввели числа которых нет в списке,введите корректное число");
         }
 
-       
+
     }
-    
+
 }
 double ReadDouble(string prompt)
 {
